@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Your Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search...">
+      <div id="searchResults"></div>
+      <button onclick="handleSearch()">Search</button>
+      <script src="./searchInfo.js"></script>
+
+    
+    </div>
+    <div class="user-options">
+      <a href="sign-in.html">Sign In</a>
+      <a href="sign-up.html">Sign Up</a>
+      <a href="cart.html">Cart</a>
+    </div>
+  </header>
+
+  <div class="slide-container">
+    <div class="slides">
+      <div class="slide active">
+        <img src="./pictures/beauties.jpg">
+        <div class="gradient-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="./pictures/houses.jpg">
+        <div class="gradient-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="./pictures/veges.jpg">
+        <div class="gradient-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="./pictures/toys.jpg">
+        <div class="gradient-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="./pictures/gaming.jpg">
+        <div class="gradient-overlay"></div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <span class="next">&#10095;</span>
+      <span class="prev">&#10094;</span>
+    </div>
+
+    <div class="dotsContainer">
+      <div class="dot active" attr='0' onclick="switchImage(this)"></div>
+      <div class="dot" attr='1' onclick="switchImage(this)"></div>
+      <div class="dot" attr='2' onclick="switchImage(this)"></div>
+      <div class="dot" attr='3' onclick="switchImage(this)"></div>
+      <div class="dot" attr='4' onclick="switchImage(this)"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="category" onclick="goToPage('vegetables.html')">
+      <h2>Vegetables</h2>
+      <img src="./pictures/vegetables.jpeg" alt="Vegetables">
+    </div>
+    <div class="category" onclick="goToPage('meat.html')">
+      <h2>Meat</h2>
+      <img src="./pictures/meat.jpeg" alt="Meat">
+    </div>
+    <div class="category" onclick="goToPage('clothes.html')">
+      <h2>Clothes</h2>
+      <img src="./pictures/cloths.jpeg" alt="Clothes">
+    </div>
+    <div class="category" onclick="goToPage('shoes.html')">
+      <h2>Shoes</h2>
+      <img src="./pictures/shoes.jpeg" alt="Shoes">
+    </div>
+    <div class="category" onclick="goToPage('beauty.html')">
+      <h2>Beauty Store</h2>
+      <img src="./pictures/beauty.jpeg" alt="Beauty">
+    </div>
+    <div class="category" onclick="goToPage('grocery.html')">
+      <h2>Grocery Store</h2>
+      <img src="./pictures/grocery.jpg" alt="Grocery">
+    </div>
+    <div class="category" onclick="goToPage('laptops.html')">
+      <h2>Laptops</h2>
+      <img src="./pictures/laptops.jpg" alt="Laptops">
+    </div>
+    <div class="category" onclick="goToPage('phones.html')">
+      <h2>Smart Phones</h2>
+      <img src="./pictures/phones.jpg" alt="Phones">
+    </div>
+    <div class="category" onclick="goToPage('items.html')">
+      <h2>Smart Phones</h2>
+      <img src="./pictures/phones.jpg" alt="items">
+    </div>
+  </div>
+
+  <!-- New API Slider Section -->
+  <div class="api-slider-container">
+    <div class="api-slider" id="api-slider">
+      <!-- Slider items will be injected here by JavaScript -->
+    </div>
+    <button class="api-prev" onclick="apiPrevSlide()">&#10094;</button>
+    <button class="api-next" onclick="apiNextSlide()">&#10095;</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="script1.js"></script>
+</body>
+</html>

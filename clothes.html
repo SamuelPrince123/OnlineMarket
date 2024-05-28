@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloth Products</title>
+</head>
+<body>
+    <h1>Cloth Products</h1>
+    <ul id="productList"></ul>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const productList = document.getElementById("productList");
+
+            // List of keywords to match for cloth products
+            const clothKeywords = ["shirt", "pants", "dress", "jacket", "skirt", "blouse"];
+
+            function filterProducts(products) {
+                if (!Array.isArray(products)) {
+                    console.error("Expected an array of products");
+                    return [];
+                }
+                return products.filter(product => {
+                    // Convert product name and category to lowercase
+                    const productName = product.name.toLowerCase();
+                    const productCategory = product.category ? product.category.toLowerCase() : "";
+
+                    // Check if the product name or category contains any of the cloth keywords
+                    return clothKeywords.some(keyword => 
+                        productName.includes(keyword.toLowerCase()) || 
+                        productCategory.includes(keyword.toLowerCase())
+                    );
+                });
+            }
+
+            function displayProducts(products) {
+                productList.innerHTML = ""; // Clear the list first
+
+                if (products.length === 0) {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = "No products found.";
+                    productList.appendChild(listItem);
+                } else {
+                    products.forEach(product => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = `${product.name} - $${product.price}`;
+                        productList.appendChild(listItem);
+                    });
+                }
+            }
+
+            fetch("http://localhost:3000/products")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Fetched products:", data); // Debug: Check fetched data
+                    
+                    // Ensure the fetched data is an array
+                    const productsArray = Array.isArray(data) ? data : Object.values(data);
+
+                    const filteredProducts = filterProducts(productsArray);
+                    console.log("Filtered products:", filteredProducts); // Debug: Check filtered products
+                    displayProducts(filteredProducts);
+                })
+                .catch(error => {
+                    console.error("Error fetching products:", error);
+                });
+        });
+    </script>
+</body>
+</html>

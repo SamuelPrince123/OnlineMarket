@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="laptops.css">
+    <style>
+        /* Centering loading message */
+        #loadingMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Spinning animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styling for spinning animation */
+        #loadingSpinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+    <title>Laptops</title>
+</head>
+
+<body>
+    <div id="loadingMessage">
+        <div id="loadingSpinner"></div>
+        Loading...
+    </div>
+    <ul id="productList"></ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const productList = document.getElementById("productList");
+            const loadingMessage = document.getElementById("loadingMessage");
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get("category");
+
+            // Function to fetch products from the server based on category
+            function fetchProductsByCategory(category) {
+                fetch(`http://localhost:3000/products?category=${category}`)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        displayProducts(data);
+                        loadingMessage.style.display = "none"; // Hide the loading message when products are loaded
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching products:", error);
+                    });
+            }
+
+            // Function to display products
+            function displayProducts(products) {
+                productList.innerHTML = ""; // Clear the list first
+
+                for (let key in products) {
+                    if (products.hasOwnProperty(key)) {
+                        const product = products[key];
+                        if (product.name.toLowerCase().startsWith("tomatoes") || 
+                            product.name.toLowerCase().startsWith("potatoes") || 
+                            product.name.toLowerCase().startsWith("carrot")) {
+                            // Check if the product name starts with 'tomatoes', 'potatoes', or 'carrot'
+                            const listItem = document.createElement("li");
+                            const image = document.createElement("img");
+                            image.src = product.imageUrl;
+                            image.alt = product.name;
+                            image.style.maxWidth = "100px"; // Adjust as needed
+                            image.style.maxHeight = "100px"; // Adjust as needed
+
+                            listItem.appendChild(image);
+
+                            const details = document.createElement("div");
+                            const productName = document.createElement("p");
+                            productName.textContent = product.name;
+                            details.appendChild(productName);
+
+                            const productPrice = document.createElement("p");
+                            productPrice.textContent = `Price: Nu:${product.price}`;
+                            details.appendChild(productPrice);
+
+                            const productDescription = document.createElement("p");
+                            productDescription.textContent = `Description: ${product.description}`;
+                            details.appendChild(productDescription);
+
+                            listItem.appendChild(details);
+
+                            productList.appendChild(listItem);
+                        }
+                    }
+                }
+            }
+
+            // Fetch products based on category when the page loads
+            fetchProductsByCategory(category);
+        });
+    </script>
+</body>
+</html>
